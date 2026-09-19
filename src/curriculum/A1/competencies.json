@@ -1,0 +1,409 @@
+[
+    {
+        "id": "a1-subject-pronouns",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Subject pronouns",
+        "description": "Understand and use Italian subject pronouns, including when the subject pronoun can naturally be omitted.",
+        "tags": [
+            "pronouns",
+            "subject-pronouns",
+            "pronoun-omission"
+        ]
+    },
+    {
+        "id": "a1-noun-gender",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Noun gender",
+        "description": "Recognise and use common masculine and feminine noun patterns.",
+        "tags": [
+            "nouns",
+            "gender"
+        ]
+    },
+    {
+        "id": "a1-noun-number",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Noun number",
+        "description": "Recognise and form common singular and plural noun patterns.",
+        "tags": [
+            "nouns",
+            "singular",
+            "plural"
+        ]
+    },
+    {
+        "id": "a1-adjective-gender-agreement",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Adjective gender agreement",
+        "description": "Make common adjectives agree with masculine and feminine nouns.",
+        "tags": [
+            "adjectives",
+            "gender",
+            "agreement"
+        ]
+    },
+    {
+        "id": "a1-adjective-number-agreement",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Adjective number agreement",
+        "description": "Make common adjectives agree with singular and plural nouns.",
+        "tags": [
+            "adjectives",
+            "number",
+            "agreement"
+        ]
+    },
+    {
+        "id": "a1-definite-articles",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Definite articles",
+        "description": "Choose and use the appropriate Italian definite article with common singular and plural nouns.",
+        "tags": [
+            "articles",
+            "definite-articles"
+        ]
+    },
+    {
+        "id": "a1-indefinite-articles",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Indefinite articles",
+        "description": "Choose and use the appropriate Italian indefinite article with common nouns.",
+        "tags": [
+            "articles",
+            "indefinite-articles"
+        ]
+    },
+    {
+        "id": "a1-present-are",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: -are verbs",
+        "description": "Conjugate and use common regular -are verbs in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "regular-verbs",
+            "are"
+        ]
+    },
+    {
+        "id": "a1-present-ere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: -ere verbs",
+        "description": "Conjugate and use common regular -ere verbs in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "regular-verbs",
+            "ere"
+        ]
+    },
+    {
+        "id": "a1-present-ire",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: -ire verbs",
+        "description": "Conjugate and use common regular -ire verbs in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "regular-verbs",
+            "ire"
+        ]
+    },
+    {
+        "id": "a1-present-essere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: essere",
+        "description": "Understand and use essere in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "irregular-verbs",
+            "essere"
+        ]
+    },
+    {
+        "id": "a1-present-avere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: avere",
+        "description": "Understand and use avere in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "irregular-verbs",
+            "avere"
+        ]
+    },
+    {
+        "id": "a1-present-andare",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: andare",
+        "description": "Understand and use andare in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "irregular-verbs",
+            "andare"
+        ]
+    },
+    {
+        "id": "a1-present-fare",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: fare",
+        "description": "Understand and use fare in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "irregular-verbs",
+            "fare"
+        ],
+        "errorRules": [
+            {
+                "id": "incorrect_conjugation",
+                "description": "Uses an incorrect present-tense conjugation of fare for the required subject."
+            },
+            {
+                "id": "infinitive_instead_of_conjugated",
+                "description": "Uses the infinitive fare where a conjugated present-tense form is required."
+            }
+        ]
+    },
+    {
+        "id": "a1-present-stare",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Present tense: stare",
+        "description": "Understand and use stare in the present indicative.",
+        "tags": [
+            "verbs",
+            "present-tense",
+            "irregular-verbs",
+            "stare"
+        ]
+    },
+    {
+        "id": "a1-modal-potere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Potere + infinitive",
+        "description": "Understand and use potere with an infinitive to express ability, possibility and simple requests.",
+        "tags": [
+            "verbs",
+            "modal-verbs",
+            "potere",
+            "infinitive"
+        ]
+    },
+    {
+        "id": "a1-modal-volere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Volere + infinitive",
+        "description": "Understand and use volere with an infinitive to express wants and intentions.",
+        "tags": [
+            "verbs",
+            "modal-verbs",
+            "volere",
+            "infinitive"
+        ]
+    },
+    {
+        "id": "a1-modal-dovere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Dovere + infinitive",
+        "description": "Understand and use dovere with an infinitive to express basic needs and obligations.",
+        "tags": [
+            "verbs",
+            "modal-verbs",
+            "dovere",
+            "infinitive"
+        ]
+    },
+    {
+        "id": "a1-reflexive-verbs",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Reflexive verbs",
+        "description": "Understand and use common reflexive verbs to describe everyday routines.",
+        "tags": [
+            "verbs",
+            "reflexive-verbs",
+            "daily-routine"
+        ]
+    },
+    {
+        "id": "a1-negation",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Negation with non",
+        "description": "Understand and form basic negative sentences using non.",
+        "tags": [
+            "negation",
+            "non"
+        ]
+    },
+    {
+        "id": "a1-question-formation",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Question formation",
+        "description": "Understand and form basic questions in Italian.",
+        "tags": [
+            "questions",
+            "question-formation"
+        ]
+    },
+    {
+        "id": "a1-question-words",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Question words",
+        "description": "Understand and use common Italian question words including chi, che, cosa, dove, quando, come, perché and quanto.",
+        "tags": [
+            "questions",
+            "question-words",
+            "interrogatives"
+        ]
+    },
+    {
+        "id": "a1-possessives",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Possessives",
+        "description": "Understand and use common Italian possessives with appropriate gender and number agreement.",
+        "tags": [
+            "possessives",
+            "agreement"
+        ]
+    },
+    {
+        "id": "a1-demonstratives",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Demonstratives",
+        "description": "Understand and use common Italian demonstratives such as questo and quello.",
+        "tags": [
+            "demonstratives",
+            "questo",
+            "quello"
+        ]
+    },
+    {
+        "id": "a1-existence-location",
+        "level": "A1",
+        "category": "grammar",
+        "name": "C'è and ci sono",
+        "description": "Understand and use c'è and ci sono to express the existence or presence of singular and plural things.",
+        "tags": [
+            "existence",
+            "location",
+            "c'è",
+            "ci-sono"
+        ]
+    },
+    {
+        "id": "a1-piacere",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Piacere",
+        "description": "Understand and use piacere to express basic likes and dislikes, including mi piace and mi piacciono.",
+        "tags": [
+            "verbs",
+            "piacere",
+            "likes",
+            "dislikes"
+        ]
+    },
+    {
+        "id": "a1-prepositions-place",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Prepositions of place and movement",
+        "description": "Understand and use common prepositions to express basic location, destination and movement.",
+        "tags": [
+            "prepositions",
+            "place",
+            "location",
+            "movement"
+        ]
+    },
+    {
+        "id": "a1-prepositions-basic",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Basic preposition use",
+        "description": "Understand and use common basic prepositions including di, da, con, su and per in familiar A1 contexts.",
+        "tags": [
+            "prepositions",
+            "di",
+            "da",
+            "con",
+            "su",
+            "per"
+        ]
+    },
+    {
+        "id": "a1-frequency",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Frequency expressions",
+        "description": "Understand and use common expressions of frequency in familiar situations.",
+        "tags": [
+            "frequency",
+            "time",
+            "routine"
+        ]
+    },
+    {
+        "id": "a1-quantity",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Quantity expressions",
+        "description": "Understand and use common expressions of quantity in familiar situations.",
+        "tags": [
+            "quantity",
+            "amount"
+        ]
+    },
+    {
+        "id": "a1-passato-prossimo-formation",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Passato prossimo formation",
+        "description": "Form the passato prossimo of common verbs using a present-tense auxiliary and past participle.",
+        "tags": [
+            "verbs",
+            "past-tense",
+            "passato-prossimo",
+            "past-participle"
+        ]
+    },
+    {
+        "id": "a1-passato-prossimo-auxiliary",
+        "level": "A1",
+        "category": "grammar",
+        "name": "Passato prossimo auxiliary choice",
+        "description": "Choose avere or essere as the auxiliary for common A1 verbs in the passato prossimo.",
+        "tags": [
+            "verbs",
+            "past-tense",
+            "passato-prossimo",
+            "avere",
+            "essere"
+        ]
+    }
+]

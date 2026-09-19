@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
+    "@expo/ui": "~57.0.18",
+    "env": "^0.0.2",
     "expo": "~57.0.23",
+    "expo-dev-client": "~57.0.19",
     "expo-status-bar": "~57.0.1",
+    "firebase": "^12.19.0",
     "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-native": "0.86.3"
   },
   "devDependencies": {
