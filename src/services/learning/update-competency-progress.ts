@@ -3,11 +3,11 @@ import { ExerciseDifficulty } from '../../../types';
 import { calculateMastery } from './calculate-mastery';
 import { calculateConfidence } from './calculate-confidence';
 
-export function updateCompetencyProgress(
+export const updateCompetencyProgress = (
   progress: CompetencyProgress,
   evaluationScore: number,
   difficulty: ExerciseDifficulty,
-): CompetencyProgress {
+): CompetencyProgress => {
   return {
     ...progress,
 

@@ -1,17 +1,16 @@
 import {
-    CefrLevel,
     Exercise,
-    ExerciseType,
     Evaluation,
 } from '../../domain';
-import { ExerciseDifficulty } from '../../../types';
+import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../../types';
 
-import { ExerciseGenerator } from '../exercise/exercise-generator';
-import { AnswerEvaluator } from '../exercise/answer-evaluator';
-import { CompetencyProgressRepo } from '../../data/competency-progress-repo';
-import { updateCompetencyProgress } from './update-confidence-progress';
-import { LearnerErrorRepo } from '../../data/learner-error-repo';
+import { ExerciseGenerator } from '../../interfaces/exercise-generator';
+import { AnswerEvaluator } from '../../interfaces/answer-evaluator';
+import { CompetencyProgressRepo } from '../../interfaces/competency-progress-repo';
+import { updateCompetencyProgress } from './update-competency-progress';
+import { LearnerErrorRepo } from '../../interfaces/learner-error-repo';
 import { updateLearnerError } from './update-learner-error';
+import { updateLearnerErrorSuccess } from './update-learning-error-success';
 
 export class LearningService {
     constructor(
@@ -67,6 +66,36 @@ export class LearningService {
                 learnerId,
                 updated,
             );
+            if (competencyEvaluation.score > 0) {
+                const learnerErrors =
+                    await this.learnerErrorRepo.getByCompetency(
+                        learnerId,
+                        competencyEvaluation.competencyId,
+                    );
+
+                for (const learnerError of learnerErrors) {
+                    const errorDetectedAgain =
+                        evaluation.detectedErrors.some(
+                            detectedError =>
+                                detectedError.competencyId ===
+                                learnerError.competencyId &&
+                                detectedError.errorType ===
+                                learnerError.errorType,
+                        );
+
+                    if (errorDetectedAgain) {
+                        continue;
+                    }
+
+                    const updated =
+                        updateLearnerErrorSuccess(learnerError);
+
+                    await this.learnerErrorRepo.save(
+                        learnerId,
+                        updated,
+                    );
+                }
+            }
         }
 
         for (const detectedError of evaluation.detectedErrors) {

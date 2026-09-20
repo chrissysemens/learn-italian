@@ -1,16 +1,19 @@
 import {
+  collection,
   doc,
   getDoc,
+  getDocs,
+  query,
   setDoc,
+  where,
 } from 'firebase/firestore';
 
 import { db } from '../../config/firebase';
 import { LearnerError } from '../../domain';
-import { LearnerErrorRepo } from '../learner-error-repo';
+import { LearnerErrorRepo } from '../../interfaces/learner-error-repo';
 
 export class FsLearnerErrorRepo
-  implements LearnerErrorRepo
-{
+  implements LearnerErrorRepo {
   async get(
     learnerId: string,
     competencyId: string,
@@ -36,6 +39,46 @@ export class FsLearnerErrorRepo
     }
 
     return snapshot.data() as LearnerError;
+  }
+
+  async getByCompetency(
+    learnerId: string,
+    competencyId: string,
+  ): Promise<LearnerError[]> {
+    const ref = collection(
+      db,
+      'learners',
+      learnerId,
+      'errors',
+    );
+
+    const q = query(
+      ref,
+      where('competencyId', '==', competencyId),
+    );
+
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map(
+      doc => doc.data() as LearnerError,
+    );
+  }
+
+  async getByLearner(
+    learnerId: string,
+  ): Promise<LearnerError[]> {
+    const ref = collection(
+      db,
+      'learners',
+      learnerId,
+      'errors',
+    );
+
+    const snapshot = await getDocs(ref);
+
+    return snapshot.docs.map(
+      doc => doc.data() as LearnerError,
+    );
   }
 
   async save(

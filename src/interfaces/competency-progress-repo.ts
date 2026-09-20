@@ -6,6 +6,10 @@ export interface CompetencyProgressRepo {
     competencyId: string,
   ): Promise<CompetencyProgress | null>;
 
+  getByLearner(
+    learnerId: string,
+  ): Promise<CompetencyProgress[]>;
+
   save(
     learnerId: string,
     progress: CompetencyProgress,

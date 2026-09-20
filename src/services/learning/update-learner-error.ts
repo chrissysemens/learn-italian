@@ -3,10 +3,10 @@ import {
   LearnerError,
 } from '../../domain';
 
-export function updateLearnerError(
+export const updateLearnerError = (
   detected: DetectedError,
   existing: LearnerError | null,
-): LearnerError {
+): LearnerError => {
   if (!detected.competencyId) {
     throw new Error(
       'Cannot persist a learner error without a competencyId.',

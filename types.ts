@@ -6,23 +6,19 @@ export type CefrLevel =
     | 'C1'
     | 'C2';
 
-export interface VocabularyItem {
-    id: string;
-    level: CefrLevel;
+export type CompetencyCategory =
+  | 'grammar'
+  | 'communication'
 
-    italian: string;
-    english: string;
+export type ExerciseType =
+  | 'translate_en_it'
+  | 'translate_it_en'
+  | 'complete'
+  | 'respond'
+  | 'describe'
+  | 'conversation'
+  | 'review';
 
-    partOfSpeech:
-    | 'noun'
-    | 'verb'
-    | 'adjective'
-    | 'adverb'
-    | 'preposition'
-    | 'other';
-
-    tags: string[];
-}
 
 export type ExerciseDifficulty =
     | 'easy'

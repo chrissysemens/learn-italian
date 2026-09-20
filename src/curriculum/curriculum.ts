@@ -1,4 +1,5 @@
-import { CefrLevel, Competency } from '../domain';
+import { Competency } from '../domain';
+import { CefrLevel } from '../../types';
 import a1Competencies from './A1/competencies.json';
 
 export const getCompetencies = (

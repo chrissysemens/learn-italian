@@ -1,6 +1,6 @@
 import { Evaluation } from '../../domain';
-import { AnswerEvaluator } from './answer-evaluator';
-import { EvaluateAnswerRequest } from './evaluate-answer-request';
+import { AnswerEvaluator } from '../../interfaces/answer-evaluator';
+import { EvaluateAnswerRequest } from '../../domain/evaluate-answer-request';
 
 export class MockAnswerEvaluator implements AnswerEvaluator {
     async evaluate(
@@ -15,8 +15,8 @@ export class MockAnswerEvaluator implements AnswerEvaluator {
                     score: 1.0,
                 }),
             ),
-            detectedErrors: [
-                {
+            detectedErrors: request.exercise.competencyIds.includes('a1-present-fare')
+                ? [{
                     id: 'error-1',
                     errorType: 'infinitive_instead_of_conjugated',
                     competencyId: 'a1-present-fare',
@@ -29,8 +29,8 @@ export class MockAnswerEvaluator implements AnswerEvaluator {
                     correctedForm: 'fai',
                     explanation:
                         'Use the conjugated form "fai" for the second-person singular.',
-                },
-            ],
+                }]
+                : [],
         };
     }
 }

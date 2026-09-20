@@ -23,11 +23,11 @@ const difficultyWeights = {
   }
 >;
 
-export function calculateMastery(
+export const calculateMastery = (
   currentMastery: number,
   evaluationScore: number,
   difficulty: ExerciseDifficulty,
-): number {
+): number => {
   const weight =
     evaluationScore >= 0
       ? difficultyWeights[difficulty].success

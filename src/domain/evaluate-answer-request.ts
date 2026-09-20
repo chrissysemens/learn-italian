@@ -1,4 +1,4 @@
-import { Exercise } from "../../domain";
+import { Exercise } from ".";
 
 export interface EvaluateAnswerRequest {
   exercise: Exercise;

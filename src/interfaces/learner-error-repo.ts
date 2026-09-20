@@ -1,4 +1,4 @@
-import { LearnerError } from '../domain';
+import { LearnerError } from "../domain";
 
 export interface LearnerErrorRepo {
   get(
@@ -6,6 +6,15 @@ export interface LearnerErrorRepo {
     competencyId: string,
     errorType: string,
   ): Promise<LearnerError | null>;
+
+  getByCompetency(
+    learnerId: string,
+    competencyId: string,
+  ): Promise<LearnerError[]>;
+
+  getByLearner(
+  learnerId: string,
+): Promise<LearnerError[]>;
 
   save(
     learnerId: string,

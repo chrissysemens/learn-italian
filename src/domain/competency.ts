@@ -1,7 +1,7 @@
 // domain/competency.ts
 
 import { ErrorRule } from './error-rule';
-import { CefrLevel } from './level';
+import { CefrLevel, CompetencyCategory } from '../../types';
 
 export interface Competency {
   id: string;
@@ -12,8 +12,3 @@ export interface Competency {
   tags: string[];
   errorRules: ErrorRule[];
 }
-
-export type CompetencyCategory =
-  | 'grammar'
-  | 'communication'
-  | 'pronunciation';

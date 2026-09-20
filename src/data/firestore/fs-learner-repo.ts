@@ -6,7 +6,7 @@ import {
 
 import { db } from '../../config/firebase';
 import { Learner } from '../../domain';
-import { LearnerRepo } from '../learner-repo';
+import { LearnerRepo } from '../../interfaces/learner-repo';
 
 export class FSLearnerRepo
   implements LearnerRepo {

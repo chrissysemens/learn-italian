@@ -1,6 +1,6 @@
 import { Exercise } from '../../domain';
-import { ExerciseGenerator } from './exercise-generator';
-import { GenerateExerciseRequest } from './generate-exercise-request';
+import { ExerciseGenerator } from '../../interfaces/exercise-generator';
+import { GenerateExerciseRequest } from '../../domain/generate-exercise-request';
 
 export class MockExerciseGenerator implements ExerciseGenerator {
   async generate(

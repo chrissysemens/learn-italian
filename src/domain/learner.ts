@@ -1,4 +1,4 @@
-import { CefrLevel } from './level';
+import { CefrLevel } from '../../types';
 
 export interface Learner {
   id: string;

@@ -2,9 +2,9 @@
 
 const CONFIDENCE_PER_ATTEMPT = 0.1;
 
-export function calculateConfidence(
+export const calculateConfidence = (
   currentConfidence: number,
-): number {
+): number => {
   return Math.min(
     1,
     currentConfidence + CONFIDENCE_PER_ATTEMPT,

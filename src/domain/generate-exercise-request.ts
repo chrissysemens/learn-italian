@@ -1,5 +1,4 @@
-import { ExerciseDifficulty } from '../../../types';
-import { CefrLevel, ExerciseType } from '../../domain';
+import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../types';
 
 export interface GenerateExerciseRequest {
   level: CefrLevel;

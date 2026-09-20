@@ -14,10 +14,10 @@ interface UseCollectionProps {
   constraints?: QueryConstraint[];
 }
 
-export function useCollection<T extends DocumentData>({
+export const useCollection = <T extends DocumentData>({
   collectionName,
   constraints = [],
-}: UseCollectionProps) {
+}: UseCollectionProps) => {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

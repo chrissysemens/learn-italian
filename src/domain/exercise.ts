@@ -1,14 +1,5 @@
-import { ExerciseDifficulty } from '../../types';
-import { CefrLevel } from './level';
+import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../types';
 
-export type ExerciseType =
-  | 'translate_en_it'
-  | 'translate_it_en'
-  | 'complete'
-  | 'respond'
-  | 'describe'
-  | 'conversation'
-  | 'review';
 
 export interface Exercise {
   id: string;

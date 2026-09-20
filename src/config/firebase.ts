@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 
-function requiredEnv(name: string): string {
+const requiredEnv = (name: string): string => {
   const value = process.env[name];
 
   if (!value) {
