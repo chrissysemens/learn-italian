@@ -10,3 +10,4 @@ export * from './vocabulary-item';
 export * from './error-rule';
 export * from './generate-exercise-request';
 export * from './evaluate-answer-request';
+export * from './difficulty-candidate';

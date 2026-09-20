@@ -18,6 +18,8 @@ import { LearningService } from './src/services/learning/learning-service';
 import { getCompetencies } from './src/curriculum/curriculum';
 import { buildCompetencyCandidates } from './src/services/learning/build-competency-candiates';
 import { selectCompetency } from './src/services/learning/select-competency';
+import { buildDifficultyCandidates } from './src/services/learning/build-difficulty-candidates';
+import { selectDifficulty } from './src/services/learning/select-difficulty';
 
 const learnerRepo = new FSLearnerRepo();
 const learnerErrorRepo = new FsLearnerErrorRepo();
@@ -72,8 +74,6 @@ export default function App() {
                     env.learnerId,
                 );
 
-            console.log('PROGRESS', progress);
-
             const learnerErrors =
                 await learnerErrorRepo.getByLearner(
                     env.learnerId,
@@ -91,11 +91,39 @@ export default function App() {
                 selectCompetency(candidates);
 
             console.log('SELECTED COMPETENCY', competencyId);
+
+                     const selectedProgress = progress.find(
+                item => item.competencyId === competencyId,
+            );
+
+            console.log('PROGRESS', progress);
+
+            console.log(
+                'SELECTED PROGRESS',
+                selectedProgress,
+            );
+
+            const difficultyCandidates =
+                buildDifficultyCandidates(selectedProgress);
+
+            const difficulty =
+                selectDifficulty(difficultyCandidates);
+
             const exercise = await learningService.generateExercise(
                 'A1',
                 'translate_en_it',
-                'standard',
+                difficulty,
                 [competencyId],
+            );
+
+            console.log(
+                'DIFFICULTY CANDIDATES',
+                difficultyCandidates,
+            );
+
+            console.log(
+                'SELECTED DIFFICULTY',
+                difficulty,
             );
 
             console.log('EXERCISE', exercise);

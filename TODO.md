@@ -64,3 +64,22 @@ Future improvement:
 - A competency may have several error types, and demonstrating the competency does not always prove that a particular historical error was tested.
 - Let evaluator or exercise metadata explicitly identify which error rules an attempt provided evidence against.
 - Give error lifecycle its own pure state transition function rather than putting the logic directly in `LearningService`.
+
+# Teach me / lesson mode
+
+Add an explicit learner-requested teaching intervention.
+
+Flow:
+- Each exercise can offer "Teach me this".
+- Generate a short, concise lesson for the target competency.
+- Lesson generation is separate from exercise generation/evaluation.
+- Learner can return to the exercise after reading the lesson.
+- The assisted attempt can still receive evaluation/feedback.
+- Do not update mastery, confidence, or recurring-error recovery from an assisted attempt.
+- Later test the competency independently with a fresh exercise.
+- Consider recording lesson requests as learner-state evidence later.
+
+Potential contract:
+- LessonGenerator
+- GenerateLessonRequest
+- Lesson
