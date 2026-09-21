@@ -1,0 +1,54 @@
+[
+  {
+    "id": "a1-greetings-introductions",
+    "name": "Greetings and introductions"
+  },
+  {
+    "id": "a1-personal-information",
+    "name": "Personal information, nationality and languages"
+  },
+  {
+    "id": "a1-numbers-prices-contact",
+    "name": "Numbers, prices and contact details"
+  },
+  {
+    "id": "a1-family",
+    "name": "Family"
+  },
+  {
+    "id": "a1-home",
+    "name": "Home"
+  },
+  {
+    "id": "a1-daily-routine",
+    "name": "Daily routine"
+  },
+  {
+    "id": "a1-time-dates-appointments",
+    "name": "Time, dates and appointments"
+  },
+  {
+    "id": "a1-food-cafes-restaurants",
+    "name": "Food, cafés and restaurants"
+  },
+  {
+    "id": "a1-shopping-clothes",
+    "name": "Shopping and clothes"
+  },
+  {
+    "id": "a1-hobbies-free-time",
+    "name": "Hobbies and free time"
+  },
+  {
+    "id": "a1-weather-seasons",
+    "name": "Weather and seasons"
+  },
+  {
+    "id": "a1-town-directions-transport",
+    "name": "Town, directions and transport"
+  },
+  {
+    "id": "a1-travel-accommodation",
+    "name": "Basic travel and accommodation"
+  }
+]

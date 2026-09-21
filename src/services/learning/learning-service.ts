@@ -1,6 +1,7 @@
 import {
     Exercise,
     Evaluation,
+    Topic,
 } from '../../domain';
 import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../../types';
 
@@ -11,6 +12,7 @@ import { updateCompetencyProgress } from './update-competency-progress';
 import { LearnerErrorRepo } from '../../interfaces/learner-error-repo';
 import { updateLearnerError } from './update-learner-error';
 import { updateLearnerErrorSuccess } from './update-learning-error-success';
+import { ExerciseGenerationContext } from '../../domain/exercise-generation-context';
 
 export class LearningService {
     constructor(
@@ -23,13 +25,14 @@ export class LearningService {
         level: CefrLevel,
         type: ExerciseType,
         difficulty: ExerciseDifficulty,
-        competencyIds: string[],
+        context: ExerciseGenerationContext,
     ): Promise<Exercise> {
+
         return this.exerciseGenerator.generate({
             level,
             type,
             difficulty,
-            competencyIds,
+            context,
         });
     }
 

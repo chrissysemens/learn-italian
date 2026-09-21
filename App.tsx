@@ -15,11 +15,13 @@ import { env } from './src/config/env';
 import { MockAnswerEvaluator } from './src/services/exercise/mock-answer-evaluator';
 import { MockExerciseGenerator } from './src/services/exercise/mock-exercise-generator';
 import { LearningService } from './src/services/learning/learning-service';
-import { getCompetencies } from './src/curriculum/curriculum';
+import { getCompetencies, getTopics } from './src/curriculum/curriculum';
 import { buildCompetencyCandidates } from './src/services/learning/build-competency-candiates';
 import { selectCompetency } from './src/services/learning/select-competency';
 import { buildDifficultyCandidates } from './src/services/learning/build-difficulty-candidates';
 import { selectDifficulty } from './src/services/learning/select-difficulty';
+import { selectExerciseType } from './src/services/learning/select-exercise-type';
+import { selectTopic } from './src/services/learning/select-topic';
 
 const learnerRepo = new FSLearnerRepo();
 const learnerErrorRepo = new FsLearnerErrorRepo();
@@ -92,7 +94,7 @@ export default function App() {
 
             console.log('SELECTED COMPETENCY', competencyId);
 
-                     const selectedProgress = progress.find(
+            const selectedProgress = progress.find(
                 item => item.competencyId === competencyId,
             );
 
@@ -109,24 +111,43 @@ export default function App() {
             const difficulty =
                 selectDifficulty(difficultyCandidates);
 
-            const exercise = await learningService.generateExercise(
-                'A1',
-                'translate_en_it',
-                difficulty,
-                [competencyId],
-            );
-
-            console.log(
-                'DIFFICULTY CANDIDATES',
-                difficultyCandidates,
-            );
-
             console.log(
                 'SELECTED DIFFICULTY',
                 difficulty,
             );
 
+
+            const exerciseType = selectExerciseType();
+
+            console.log(
+                'SELECTED EXERCISE TYPE',
+                exerciseType,
+            );
+
+            const topics = getTopics('A1');
+            
+            const topic = selectTopic(topics);
+
+            console.log(
+                'SELECTED TOPIC',
+                topic,
+            );
+
+            const exercise = await learningService.generateExercise(
+                'A1',
+                exerciseType,
+                difficulty,
+                {
+                    topic,
+                    competencies: competencies.filter(c => c.id === competencyId),
+                },
+            );
+
             console.log('EXERCISE', exercise);
+
+            if (exercise.type === 'review') {
+                return;
+            }
 
             const evaluation = await learningService.evaluateAnswer(
                 env.learnerId,
