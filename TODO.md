@@ -83,3 +83,21 @@ Potential contract:
 - LessonGenerator
 - GenerateLessonRequest
 - Lesson
+
+# A1 error rule taxonomy
+
+Populate competency-specific `errorRules` for the A1 curriculum.
+
+- Keep rule IDs stable once learner errors can be persisted against them.
+- Rules should describe distinct, trackable mistakes rather than generic "wrong answer" categories.
+- Avoid duplicating the same semantic error under multiple rules.
+- Review rules alongside the real evaluator implementation.
+
+# Assisted attempts
+
+Answers submitted after "Teach me" are assisted attempts.
+
+- Evaluate them and show normal linguistic feedback.
+- Do not update mastery or confidence.
+- Do not count them as evidence that a recurring error is improving/resolved.
+- Retest later with a fresh unassisted exercise.
