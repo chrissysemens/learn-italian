@@ -1,5 +1,5 @@
 import { Exercise } from '../../domain';
-import { ExerciseGenerator } from '../../interfaces/exercise-generator';
+import { ExerciseGenerator } from '../../interfaces';
 import { GenerateExerciseRequest } from '../../domain/generate-exercise-request';
 
 export class MockExerciseGenerator implements ExerciseGenerator {

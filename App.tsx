@@ -22,6 +22,9 @@ import { buildDifficultyCandidates } from './src/services/learning/build-difficu
 import { selectDifficulty } from './src/services/learning/select-difficulty';
 import { selectExerciseType } from './src/services/learning/select-exercise-type';
 import { selectTopic } from './src/services/learning/select-topic';
+import { LessonService } from './src/services/lesson/lesson-service';
+import { MockLessonGenerator } from './src/services/lesson/mock-lesson-generator';
+import { FsLessonRepo } from './src/data/firestore/fs-lesson-repo';
 
 const learnerRepo = new FSLearnerRepo();
 const learnerErrorRepo = new FsLearnerErrorRepo();
@@ -87,10 +90,19 @@ export default function App() {
                 learnerErrors,
             );
 
-            console.log('CANDIDATES', candidates);
-
             const competencyId =
                 selectCompetency(candidates);
+
+            const competency = competencies.find(
+                c => c.id === competencyId,
+            );
+
+
+            if (!competency) {
+                throw new Error(
+                    `Competency not found: ${competencyId}`,
+                );
+            }
 
             console.log('SELECTED COMPETENCY', competencyId);
 
@@ -125,7 +137,7 @@ export default function App() {
             );
 
             const topics = getTopics('A1');
-            
+
             const topic = selectTopic(topics);
 
             console.log(
@@ -144,6 +156,19 @@ export default function App() {
             );
 
             console.log('EXERCISE', exercise);
+
+            const lessonService = new LessonService(
+                new MockLessonGenerator(),
+                new FsLessonRepo());
+
+            const lesson = await lessonService.createLesson(
+                env.learnerId,
+                exercise,
+                [competency],
+                topic,
+            );
+
+            console.log('LESSON', lesson);
 
             if (exercise.type === 'review') {
                 return;

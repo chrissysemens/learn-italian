@@ -10,7 +10,7 @@ import {
 
 import { db } from '../../config/firebase';
 import { LearnerError } from '../../domain';
-import { LearnerErrorRepo } from '../../interfaces/learner-error-repo';
+import { LearnerErrorRepo } from '../../interfaces';
 
 export class FsLearnerErrorRepo
   implements LearnerErrorRepo {

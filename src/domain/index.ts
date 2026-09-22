@@ -11,3 +11,6 @@ export * from './error-rule';
 export * from './generate-exercise-request';
 export * from './evaluate-answer-request';
 export * from './difficulty-candidate';
+export * from './exercise-generation-context';
+export * from './lesson';
+export * from './generate-lesson-request';

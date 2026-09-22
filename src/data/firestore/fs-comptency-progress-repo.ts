@@ -8,7 +8,7 @@ import {
 
 import { db } from '../../config/firebase';
 import { CompetencyProgress } from '../../domain';
-import { CompetencyProgressRepo } from '../../interfaces/competency-progress-repo';
+import { CompetencyProgressRepo } from '../../interfaces';
 
 export class FsCompetencyProgressRepo
   implements CompetencyProgressRepo {

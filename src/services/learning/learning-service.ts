@@ -5,11 +5,9 @@ import {
 } from '../../domain';
 import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../../types';
 
-import { ExerciseGenerator } from '../../interfaces/exercise-generator';
-import { AnswerEvaluator } from '../../interfaces/answer-evaluator';
-import { CompetencyProgressRepo } from '../../interfaces/competency-progress-repo';
+import { ExerciseGenerator, CompetencyProgressRepo, LearnerErrorRepo } from '../../interfaces';
+import { AnswerEvaluator } from '../../domain/answer-evaluator';
 import { updateCompetencyProgress } from './update-competency-progress';
-import { LearnerErrorRepo } from '../../interfaces/learner-error-repo';
 import { updateLearnerError } from './update-learner-error';
 import { updateLearnerErrorSuccess } from './update-learning-error-success';
 import { ExerciseGenerationContext } from '../../domain/exercise-generation-context';

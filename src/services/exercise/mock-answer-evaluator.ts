@@ -1,5 +1,5 @@
 import { Evaluation } from '../../domain';
-import { AnswerEvaluator } from '../../interfaces/answer-evaluator';
+import { AnswerEvaluator } from '../../domain/answer-evaluator';
 import { EvaluateAnswerRequest } from '../../domain/evaluate-answer-request';
 
 export class MockAnswerEvaluator implements AnswerEvaluator {

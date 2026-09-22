@@ -1,5 +1,5 @@
 import { Learner } from '../../domain';
-import { LearnerRepo } from '../../interfaces/learner-repo';
+import { LearnerRepo } from '../../interfaces';
 
 export class MockLearnerRepo implements LearnerRepo{
   private learner: Learner = {

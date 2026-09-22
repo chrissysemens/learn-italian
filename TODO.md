@@ -71,18 +71,74 @@ Add an explicit learner-requested teaching intervention.
 
 Flow:
 - Each exercise can offer "Teach me this".
-- Generate a short, concise lesson for the target competency.
+- Remove the current exercise from view and generate a short, targeted lesson for what is needed to understand it without revealing its answer.
+- Lesson generation receives the actual exercise and relevant curriculum context.
 - Lesson generation is separate from exercise generation/evaluation.
-- Learner can return to the exercise after reading the lesson.
+- A small back action restores the original exercise and its state.
 - The assisted attempt can still receive evaluation/feedback.
 - Do not update mastery, confidence, or recurring-error recovery from an assisted attempt.
+- Do not visually penalise or label the learner for requesting help.
 - Later test the competency independently with a fresh exercise.
-- Consider recording lesson requests as learner-state evidence later.
+- Persist every generated lesson as an immutable historical artifact.
+- Give each learner's lessons a monotonically increasing presentation/domain sequence number.
 
 Potential contract:
 - LessonGenerator
 - GenerateLessonRequest
 - Lesson
+- Consider renaming `NewLesson` to better reflect its role as lesson creation input.
+- Return to replace the mocked `FsLessonRepo` implementation with Firestore persistence, including transactional sequence assignment and latest/sequence-based lesson retrieval.
+
+# Learning UI / UX
+
+## Visual direction
+
+- Draw inspiration from restrained instrument interfaces: generous negative space, thin line-work, simple geometry, and tactile matte surfaces.
+- Use a warm, paper-like reading surface rather than a conventional app/dashboard aesthetic.
+- Integrate controls into the surface so they do not feel like conventional buttons.
+- Use texture extremely subtly; readability and calm take priority over decorative effects.
+- Allow exercise types to have distinct compositions while sharing the same visual language.
+
+## Main learning surface
+
+- Keep the primary exercise screen minimal and paper-like: white, greys, restrained typography, and soft transitions.
+- Avoid gamified visual noise, cartoon characters, bright colours, and large action buttons.
+- Give each exercise type its own presentation component while sharing the same minimal shell.
+- Keep header navigation minimal: menu, journal, and progress.
+
+## Answer focus mode
+
+- Tapping the answer area transitions into a dedicated answering state.
+- Hide non-essential screen content while the keyboard is open.
+- Centre the answer area in the usable space above the keyboard.
+- Pressing Return submits the answer and dismisses the keyboard.
+- Do not provide an explicit submit button.
+- Treat the transition as a first-class UX interaction rather than relying only on default text-input/keyboard behaviour.
+
+## Icon interactions
+
+- Use small monochrome icons for primary actions rather than conventional buttons.
+- Use a chalkboard-style icon for Learn and a skipping-rope-style icon for Skip.
+- Show explanatory labels during the learner's initial experience; allow labels to disappear once familiar.
+- Long press reveals an icon label without performing the action.
+- Normal tap performs the action.
+- Provide accessibility labels independently of visible labels.
+
+## Skip
+
+- Skipping an exercise is not negative mastery evidence.
+- Consider tracking skips later as separate learner-state evidence.
+
+# Learning Journal
+
+- Persist every generated Teach Me lesson.
+- Treat lessons as immutable historical artifacts: revisiting a lesson shows the original lesson rather than regenerated content.
+- Give each learner's lessons a monotonically increasing sequence number: Lesson 1, Lesson 2, ...
+- Keep the sequence number as presentation/domain data; it does not need to be the Firestore document ID.
+- Open the journal on the learner's most recent lesson.
+- Support simple previous/next navigation through lesson history.
+- Keep V1 deliberately simple: no folders, categories, search, or other library-style UI.
+- Communicate the learner's journey by keeping old lessons visible even after they become easy.
 
 # A1 error rule taxonomy
 
