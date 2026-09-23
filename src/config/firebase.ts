@@ -1,5 +1,9 @@
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
 import { getFirestore, type Firestore } from 'firebase/firestore';
+import {
+  connectFunctionsEmulator,
+  getFunctions,
+} from 'firebase/functions';
 
 const requiredEnv = (name: string): string => {
   const value = process.env[name];
@@ -25,3 +29,11 @@ export const firebaseApp: FirebaseApp = getApps().length > 0
   : initializeApp(firebaseConfig);
 
 export const db: Firestore = getFirestore(firebaseApp);
+
+const app = getApp();
+
+export const functions = getFunctions(app);
+
+if (process.env.NODE_ENV === 'development') {
+  connectFunctionsEmulator(functions, '192.168.0.103', 5001);
+}

@@ -38,10 +38,12 @@ export class LearningService {
         learnerId: string,
         exercise: Exercise,
         answer: string,
+        assisted: boolean,
     ): Promise<Evaluation> {
         const evaluation = await this.answerEvaluator.evaluate({
             exercise,
             answer,
+            assisted,
         });
 
         for (const competencyEvaluation of evaluation.competencyEvaluations) {

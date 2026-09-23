@@ -13,7 +13,7 @@ import { CompetencyProgress } from './src/domain';
 import { Learner } from './src/domain/learner';
 import { env } from './src/config/env';
 import { MockAnswerEvaluator } from './src/services/exercise/mock-answer-evaluator';
-import { MockExerciseGenerator } from './src/services/exercise/mock-exercise-generator';
+//import { MockExerciseGenerator } from './src/services/exercise/mock-exercise-generator';
 import { LearningService } from './src/services/learning/learning-service';
 import { getCompetencies, getTopics } from './src/curriculum/curriculum';
 import { buildCompetencyCandidates } from './src/services/learning/build-competency-candiates';
@@ -25,6 +25,9 @@ import { selectTopic } from './src/services/learning/select-topic';
 import { LessonService } from './src/services/lesson/lesson-service';
 import { MockLessonGenerator } from './src/services/lesson/mock-lesson-generator';
 import { FsLessonRepo } from './src/data/firestore/fs-lesson-repo';
+import { OpenAIExerciseGenerator } from './src/services/exercise/open-ai-exercise-geenerator';
+import { httpsCallable } from 'firebase/functions';
+import { functions } from './src/config/firebase';
 
 const learnerRepo = new FSLearnerRepo();
 const learnerErrorRepo = new FsLearnerErrorRepo();
@@ -33,7 +36,7 @@ const competencyProgressRepo =
 
 
 const learningService = new LearningService(
-    new MockExerciseGenerator(),
+    new OpenAIExerciseGenerator(),
     new MockAnswerEvaluator(),
     competencyProgressRepo,
     learnerErrorRepo,
@@ -43,6 +46,7 @@ export default function App() {
     const [learner, setLearner] = useState<Learner | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+
 
     useEffect(() => {
         const loadLearner = async () => {
@@ -72,6 +76,22 @@ export default function App() {
 
     const runExercise = async () => {
         try {
+            const generateExercise =
+                httpsCallable(
+                    functions,
+                    'generateExercise',
+                );
+
+            const result =
+                await generateExercise({
+                    hello: 'Percoso',
+                });
+
+            console.log(
+                'FUNCTION RESULT',
+                result.data,
+            );
+
             const competencies = getCompetencies('A1');
 
             const progress =
@@ -157,6 +177,14 @@ export default function App() {
 
             console.log('EXERCISE', exercise);
 
+            const skip = false;
+
+            if (skip) {
+                console.log('SKIPPED');
+                return;
+            }
+
+
             const lessonService = new LessonService(
                 new MockLessonGenerator(),
                 new FsLessonRepo());
@@ -174,15 +202,37 @@ export default function App() {
                 return;
             }
 
+            const assisted = false;
+
+            console.log('ASSISTED', assisted);
+
             const evaluation = await learningService.evaluateAnswer(
                 env.learnerId,
                 exercise,
                 'Cosa fai sabato?',
+                assisted
             );
 
+            if (assisted) {
+                console.log('ASSISTED — skipping learner state updates');
+                return evaluation;
+            }
+
             console.log('EVALUATION', evaluation);
+
+
         } catch (error) {
-            console.error(error);
+            console.error('FUNCTION ERROR', error);
+
+            if (error instanceof Error) {
+                console.error('MESSAGE', error.message);
+                console.error('STACK', error.stack);
+            }
+
+            console.log(
+                'RAW ERROR',
+                JSON.stringify(error, null, 2),
+            );
         }
     };
 
