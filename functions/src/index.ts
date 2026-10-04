@@ -9,6 +9,12 @@ import {
 
 import OpenAI from 'openai';
 
+import { zodTextFormat } from 'openai/helpers/zod';
+
+import {
+  generatedExerciseSchema,
+} from './schemas/generated-exercise-schema';
+
 const openAiApiKey =
   defineSecret('OPENAI_API_KEY');
 
@@ -28,20 +34,52 @@ export const generateExercise = onCall(
       });
 
       const response =
-        await openai.responses.create({
-          model: 'gpt-5.6-luna',
-          input:
-            'Say "Ciao from Percoso" and nothing else.',
+        await openai.responses.parse({
+          model: 'gpt-6-luna',
+
+          instructions: `
+            You generate Italian language exercises for a learner.
+
+            Generate one exercise using the supplied curriculum context.
+
+            The supplied competency is the primary learning target.
+            Keep all language appropriate to the supplied CEFR level.
+
+            Use the supplied topic as natural context where possible.
+            Prefer a natural, believable exercise over forcing the topic
+            into an unnatural situation.
+
+            Difficulty controls the amount of scaffolding and production
+            demand, not the CEFR level of the language.
+
+            Do not make unrelated or advanced vocabulary the primary
+            source of difficulty.
+          `.trim(),
+
+          input: JSON.stringify(request.data),
+
+          text: {
+            format: zodTextFormat(
+              generatedExerciseSchema,
+              'generated_exercise',
+            ),
+          },
         });
 
+      const exercise = response.output_parsed;
+
+      if (!exercise) {
+        throw new Error(
+          'OpenAI did not return a generated exercise.',
+        );
+      }
+
       console.log(
-        'OPENAI RESPONSE',
-        response.output_text,
+        'GENERATED EXERCISE',
+        exercise,
       );
 
-      return {
-        text: response.output_text,
-      };
+      return exercise;
     } catch (error) {
       console.error(
         'OPENAI ERROR',

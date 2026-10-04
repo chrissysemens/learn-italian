@@ -25,9 +25,12 @@ import { selectTopic } from './src/services/learning/select-topic';
 import { LessonService } from './src/services/lesson/lesson-service';
 import { MockLessonGenerator } from './src/services/lesson/mock-lesson-generator';
 import { FsLessonRepo } from './src/data/firestore/fs-lesson-repo';
-import { OpenAIExerciseGenerator } from './src/services/exercise/open-ai-exercise-geenerator';
+import { FirebaseExerciseGenerator } from './src/services/exercise/firebase-exercise-generator';
 import { httpsCallable } from 'firebase/functions';
 import { functions } from './src/config/firebase';
+
+
+
 
 const learnerRepo = new FSLearnerRepo();
 const learnerErrorRepo = new FsLearnerErrorRepo();
@@ -36,7 +39,7 @@ const competencyProgressRepo =
 
 
 const learningService = new LearningService(
-    new OpenAIExerciseGenerator(),
+    new FirebaseExerciseGenerator(),
     new MockAnswerEvaluator(),
     competencyProgressRepo,
     learnerErrorRepo,
@@ -76,22 +79,6 @@ export default function App() {
 
     const runExercise = async () => {
         try {
-            const generateExercise =
-                httpsCallable(
-                    functions,
-                    'generateExercise',
-                );
-
-            const result =
-                await generateExercise({
-                    hello: 'Percoso',
-                });
-
-            console.log(
-                'FUNCTION RESULT',
-                result.data,
-            );
-
             const competencies = getCompetencies('A1');
 
             const progress =
