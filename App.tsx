@@ -1,55 +1,48 @@
-import React, { useEffect, useState } from 'react';
 import {
-    Button,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
-
-import { FsLearnerErrorRepo } from './src/data/firestore/fs-learner-error-repo';
+    SplashScreen,
+} from './src/screens/spalsh/splash';
+import { useEffect, useState } from 'react';
+import { Learner } from './src/domain';
+import { HomeScreen } from './src/screens/home/home';
 import { FSLearnerRepo } from './src/data/firestore/fs-learner-repo';
-import { FsCompetencyProgressRepo } from './src/data/firestore/fs-comptency-progress-repo';
-import { CompetencyProgress } from './src/domain';
-import { Learner } from './src/domain/learner';
 import { env } from './src/config/env';
-import { MockAnswerEvaluator } from './src/services/exercise/mock-answer-evaluator';
-//import { MockExerciseGenerator } from './src/services/exercise/mock-exercise-generator';
-import { LearningService } from './src/services/learning/learning-service';
-import { getCompetencies, getTopics } from './src/curriculum/curriculum';
-import { buildCompetencyCandidates } from './src/services/learning/build-competency-candiates';
-import { selectCompetency } from './src/services/learning/select-competency';
-import { buildDifficultyCandidates } from './src/services/learning/build-difficulty-candidates';
-import { selectDifficulty } from './src/services/learning/select-difficulty';
-import { selectExerciseType } from './src/services/learning/select-exercise-type';
-import { selectTopic } from './src/services/learning/select-topic';
-import { LessonService } from './src/services/lesson/lesson-service';
-import { MockLessonGenerator } from './src/services/lesson/mock-lesson-generator';
-import { FsLessonRepo } from './src/data/firestore/fs-lesson-repo';
-import { FirebaseExerciseGenerator } from './src/services/exercise/firebase-exercise-generator';
-import { httpsCallable } from 'firebase/functions';
-import { functions } from './src/config/firebase';
-
-
-
-
-const learnerRepo = new FSLearnerRepo();
-const learnerErrorRepo = new FsLearnerErrorRepo();
-const competencyProgressRepo =
-    new FsCompetencyProgressRepo();
-
-
-const learningService = new LearningService(
-    new FirebaseExerciseGenerator(),
-    new MockAnswerEvaluator(),
-    competencyProgressRepo,
-    learnerErrorRepo,
-);
+import { useFonts } from 'expo-font';
+import { Manrope_400Regular, Manrope_500Medium } from '@expo-google-fonts/manrope';
+import { ErrorScreen } from './src/screens/error/error';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView, initialWindowMetrics } from 'react-native-safe-area-context';
+import { colours } from './src/theme/colours';
 
 export default function App() {
-    const [learner, setLearner] = useState<Learner | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
+    return (
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+            <SafeAreaView style={appStyles.container}>
+                <AppContent />
+            </SafeAreaView>
+        </SafeAreaProvider>
+    );
+}
 
+const appStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colours.background,
+    },
+});
+
+function AppContent() {
+    const [learner, setLearner] = useState<Learner | null>(null);
+    const [error, setError] = useState<Error | null>(null);
+    const [loading, setLoading] = useState(true);
+    
+
+    const [fontsLoaded] = useFonts({
+        Manrope_400Regular,
+        Manrope_500Medium,
+    });
+    
+
+    const learnerRepo = new FSLearnerRepo();
 
     useEffect(() => {
         const loadLearner = async () => {
@@ -76,6 +69,108 @@ export default function App() {
 
         loadLearner();
     }, []);
+
+    if(!loading && error) {
+        return <ErrorScreen />;
+    }
+
+    if (!fontsLoaded || loading) {
+        return <SplashScreen />;
+    }
+
+    if(!loading && !error && learner) {
+        return <HomeScreen learner={learner} />;
+    }
+}
+
+/*import React, { useEffect, useState } from 'react';
+import {
+    Button,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
+
+import { FsLearnerErrorRepo } from './src/data/firestore/fs-learner-error-repo';
+import { FSLearnerRepo } from './src/data/firestore/fs-learner-repo';
+import { FsCompetencyProgressRepo } from './src/data/firestore/fs-comptency-progress-repo';
+import { CompetencyProgress } from './src/domain';
+import { Learner } from './src/domain/learner';
+import { env } from './src/config/env';
+import { MockAnswerEvaluator } from './src/services/exercise/mock-answer-evaluator';
+import { LearningService } from './src/services/learning/learning-service';
+import { getCompetencies, getTopics } from './src/curriculum/curriculum';
+import { buildCompetencyCandidates } from './src/services/learning/build-competency-candiates';
+import { selectCompetency } from './src/services/learning/select-competency';
+import { buildDifficultyCandidates } from './src/services/learning/build-difficulty-candidates';
+import { selectDifficulty } from './src/services/learning/select-difficulty';
+import { selectExerciseType } from './src/services/learning/select-exercise-type';
+import { selectTopic } from './src/services/learning/select-topic';
+import { LessonService } from './src/services/lesson/lesson-service';
+import { MockLessonGenerator } from './src/services/lesson/mock-lesson-generator';
+import { FsLessonRepo } from './src/data/firestore/fs-lesson-repo';
+import { FirebaseExerciseGenerator } from './src/services/exercise/firebase-exercise-generator';
+import {
+    Manrope_400Regular,
+    Manrope_500Medium,
+    useFonts,
+} from '@expo-google-fonts/manrope';
+
+
+
+
+const learnerRepo = new FSLearnerRepo();
+const learnerErrorRepo = new FsLearnerErrorRepo();
+const competencyProgressRepo =
+    new FsCompetencyProgressRepo();
+
+
+const learningService = new LearningService(
+    new FirebaseExerciseGenerator(),
+    new MockAnswerEvaluator(),
+    competencyProgressRepo,
+    learnerErrorRepo,
+);
+
+export default function App() {
+    const [learner, setLearner] = useState<Learner | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
+
+    const [fontsLoaded] = useFonts({
+        Manrope_400Regular,
+        Manrope_500Medium,
+    });
+
+    useEffect(() => {
+        const loadLearner = async () => {
+            try {
+                if (!env.learnerId) {
+                    throw new Error(
+                        'EXPO_PUBLIC_LEARNER_ID is not configured.',
+                    );
+                }
+
+                setLearner(
+                    await learnerRepo.get(env.learnerId),
+                );
+            } catch (loadError) {
+                setError(
+                    loadError instanceof Error
+                        ? loadError
+                        : new Error('Unable to load learner.'),
+                );
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadLearner();
+    }, []);
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
     const runExercise = async () => {
         try {
@@ -271,3 +366,4 @@ const styles = StyleSheet.create({
         padding: 24,
     },
 });
+*/

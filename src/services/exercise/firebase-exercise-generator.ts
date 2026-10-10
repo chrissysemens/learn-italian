@@ -10,7 +10,10 @@ import {
 import { httpsCallable } from 'firebase/functions';
 
 import { functions } from '../../config/firebase';
-import { generatedExerciseSchema } from '../../schemas/generated-exercise-schema';
+import {
+    completeContentSchema,
+    //generatedExerciseSchema,
+} from '@percoso/shared';
 
 import * as Crypto from 'expo-crypto';
 
@@ -46,10 +49,16 @@ export class FirebaseExerciseGenerator
 
         const result = await generateExercise(input);
 
-        const generated =
-            generatedExerciseSchema.parse(
-                result.data,
-            );
+        console.log(
+        'RAW RESPONSE',
+        JSON.stringify(result.data, null, 2),
+        );
+
+        const generated = completeContentSchema.parse(
+            result.data,
+        );
+
+        console.log('COMPLETE EXERCISE', JSON.stringify(generated, null, 2));
 
         console.log(
             'VALIDATED EXERCISE',
@@ -61,9 +70,9 @@ export class FirebaseExerciseGenerator
             type: request.type,
             level: request.level,
             difficulty: request.difficulty,
-            prompt: generated.prompt,
-            referenceAnswers:
-                generated.referenceAnswers,
+            prompt: generated.instruction,
+            referenceAnswers: [],
+            completeContent: generated,
             competencyIds:
                 request.context.competencies.map(
                     competency => competency.id,

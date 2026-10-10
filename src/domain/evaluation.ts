@@ -10,9 +10,8 @@ export interface DetectedError {
   errorType: string;
   competencyId?: string;
   category: LearnerErrorCategory;
-
-  range: TextRange;
-
+  range?: TextRange;
+  location?: CompleteErrorLocation;
   learnerForm: string;
   correctedForm: string;
   explanation: string;
@@ -40,4 +39,9 @@ export interface Evaluation {
   competencyEvaluations: CompetencyEvaluation[];
 
   detectedErrors: DetectedError[];
+}
+
+export interface CompleteErrorLocation {
+  blankId: string;
+  range: TextRange;
 }

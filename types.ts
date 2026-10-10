@@ -46,3 +46,6 @@ export type LearnerErrorCategory =
     | 'register'
     | 'punctuation'
     | 'other';
+
+export type ReadingMode = 'italian' | 'english' | 'both';
+

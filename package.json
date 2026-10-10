@@ -3,27 +3,34 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
-    "@expo/ui": "~57.0.21",
+    "@expo-google-fonts/manrope": "^0.4.2",
+    "@percoso/shared": "file:shared",
     "env": "^0.0.2",
     "expo": "~57.0.26",
     "expo-crypto": "~57.0.3",
     "expo-dev-client": "~57.0.19",
+    "expo-font": "~57.0.4",
+    "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "firebase": "^12.19.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-svg": "15.15.4",
     "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "react-native-svg-transformer": "^1.5.3",
     "typescript": "~6.0.3"
   },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "emulator": "npm run build --prefix shared && npm install ./shared --prefix functions && npm run build --prefix functions && firebase emulators:start --only functions"
   },
   "private": true
 }

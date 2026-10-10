@@ -1,6 +1,7 @@
 // learner-error.ts
 
 import { LearnerErrorCategory, LearnerErrorStatus } from "../../types";
+import { TextRange } from "./evaluation";
 
 export interface LearnerError {
   errorType: string;
@@ -15,4 +16,9 @@ export interface LearnerError {
 
   lastSeen?: string;
   status: LearnerErrorStatus;
+}
+
+export interface CompleteErrorLocation {
+  blankId: string;
+  range: TextRange;
 }

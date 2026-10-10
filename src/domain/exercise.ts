@@ -1,4 +1,8 @@
 import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../types';
+import type {
+  CompleteExerciseContent,
+} from '@percoso/shared';
+
 
 
 export interface Exercise {
@@ -11,4 +15,5 @@ export interface Exercise {
   competencyIds: string[];
   vocabularyIds: string[];
   topicId?: string;
+  completeContent?: CompleteExerciseContent;
 }
