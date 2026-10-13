@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import type {
     CompleteExerciseContent,
-    Evaluation as SharedEvaluation,
+    CompleteEvaluation,
 } from '@percoso/shared';
 
 import { colours } from '../../theme/colours';
@@ -14,7 +14,7 @@ import { Switcher } from '../ui/switcher';
 interface Props {
     content: CompleteExerciseContent;
     answers: Record<string, string>;
-    evaluation: SharedEvaluation;
+    evaluation: CompleteEvaluation;
 }
 
 export const CompleteAnswer = ({

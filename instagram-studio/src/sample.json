@@ -1,0 +1,21 @@
+{
+  "challengeNumber": 1,
+  "level": "A1",
+  "activity": "FILL IN THE BLANKS",
+  "headline": "Can you get 3/3?",
+  "instruction": "Complete each sentence using the correct form of POCO (little/few).",
+  "questions": [
+    {"prompt": "Bevo ___ acqua.", "answer": "poca", "note": "Acqua is feminine singular."},
+    {"prompt": "Mangio ___ biscotti.", "answer": "pochi", "note": "Biscotti is masculine plural."},
+    {"prompt": "Ho ___ tempo.", "answer": "poco", "note": "Tempo is masculine singular."}
+  ],
+  "tipTitle": "One word. Four forms.",
+  "tipIntro": "POCO changes to match the gender and number of the noun.",
+  "tipRows": [
+    {"form": "POCO", "meaning": "masculine singular", "example": "poco tempo"},
+    {"form": "POCA", "meaning": "feminine singular", "example": "poca acqua"},
+    {"form": "POCHI", "meaning": "masculine plural", "example": "pochi biscotti"},
+    {"form": "POCHE", "meaning": "feminine plural", "example": "poche persone"}
+  ],
+  "caption": "🇮🇹 Percoso Daily Challenge #001 · A1\n\nCan you complete these sentences using the correct form of POCO? Try all three before swiping for the answers and a quick grammar tip!\n\n💬 How many did you get right? Tell us below.\n\nA little Italian, every day. 💜\n\n#LearnItalian #ItalianForBeginners #ItalianGrammar #Percoso"
+}

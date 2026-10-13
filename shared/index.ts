@@ -1,25 +1,42 @@
 export {
-  generatedExerciseSchema,
+    generatedExerciseSchema,
 } from './schemas/generated-exercise-schema';
 
+// Complete exercise
 export {
-  completeContentSchema,
+    completeContentSchema,
 } from './schemas/complete-content-schema';
 
 export type {
-  CompleteExerciseContent,
+    CompleteExerciseContent,
 } from './schemas/complete-content-schema';
 
 export type {
-  CompleteAnswer,
+    CompleteAnswer,
 } from './domain/exercises/complete-answer';
 
+// English → Italian translation exercise
 export {
-  evaluationSchema,
-  learnerErrorCategorySchema,
+    translateEnItContentSchema,
+} from './schemas/translate-en-it-content-schema';
+
+export type {
+    TranslateEnItExerciseContent,
+} from './schemas/translate-en-it-content-schema';
+
+export type {
+    TranslateEnItAnswer,
+} from './domain/exercises/translate-en-it-answer';
+
+// Exercise evaluation
+export {
+    completeEvaluationSchema,
+    translateEnItEvaluationSchema,
+    learnerErrorCategorySchema,
 } from './schemas/evaluation-schema';
 
 export type {
-  Evaluation,
-  LearnerErrorCategory,
+    CompleteEvaluation,
+    TranslateEnItEvaluation,
+    LearnerErrorCategory,
 } from './schemas/evaluation-schema';

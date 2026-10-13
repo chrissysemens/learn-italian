@@ -25,9 +25,10 @@ import { Button } from '../../components/ui/button';
 import { Loading } from '../../components/loading';
 import { FirebaseExerciseEvaluator } from '../../services/exercise/firebase-exercise-evaluator';
 import type {
-    Evaluation as SharedEvaluation,
+    CompleteEvaluation,
 } from '@percoso/shared';
 import { CompleteAnswer } from '../../components/exercises/complete-answer';
+import { TranslateEnItExercise } from '../../components/exercises/translate-en-it';
 
 
 interface Props {
@@ -50,7 +51,9 @@ export const HomeScreen = ({ learner }: Props) => {
     const [transitioning, setTransitioning] = useState(false);
     const [exerciseRevision, setExerciseRevision] = useState(0);
     const [evaluation, setEvaluation] =
-        useState<SharedEvaluation | null>(null);
+        useState<CompleteEvaluation | null>(null);
+    const [translationAnswer, setTranslationAnswer] =
+        useState<string>('');
 
     useLayoutEffect(() => {
         exerciseOpacity.setValue(1);
@@ -99,7 +102,7 @@ export const HomeScreen = ({ learner }: Props) => {
 
             const generated = await learningService.generateExercise(
                 learner.currentLevel,
-                'complete',
+                'translate_en_it',
                 difficulty,
                 {
                     competencies: [competency],
@@ -108,6 +111,7 @@ export const HomeScreen = ({ learner }: Props) => {
             );
 
             setAnswers({});
+            setTranslationAnswer('');
             setEvaluation(null);
             setExerciseRevision(revision => revision + 1);
             setExercise(generated);
@@ -226,6 +230,14 @@ export const HomeScreen = ({ learner }: Props) => {
                             )}
                         </Animated.View>
                     )}
+                {exercise?.type === 'translate_en_it' &&
+                    exercise.translateEnItContent && (
+                        <TranslateEnItExercise
+                            content={exercise.translateEnItContent}
+                            answer={translationAnswer}
+                            onAnswerChange={setTranslationAnswer}
+                        />
+                    )}
                 {error && (
                     <Text style={styles.error}>{error}</Text>
                 )}
@@ -243,12 +255,12 @@ export const HomeScreen = ({ learner }: Props) => {
                     />
                 )}
                 {exercise?.completeContent && evaluation && (
-                <Button
-                    title="Next"
-                    onPress={nextExercise}
-                    disabled={generating || transitioning}
-                    style={styles.submit}
-                />
+                    <Button
+                        title="Next"
+                        onPress={nextExercise}
+                        disabled={generating || transitioning}
+                        style={styles.submit}
+                    />
                 )}
                 {error && !exercise && (
                     <Button title="Retry" onPress={generateExercise} disabled={generating} />

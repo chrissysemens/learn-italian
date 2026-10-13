@@ -6,13 +6,11 @@ import {
 import {
     ExerciseGenerator,
 } from '../../interfaces';
-
 import { httpsCallable } from 'firebase/functions';
-
 import { functions } from '../../config/firebase';
 import {
     completeContentSchema,
-    //generatedExerciseSchema,
+    translateEnItContentSchema,
 } from '@percoso/shared';
 
 import * as Crypto from 'expo-crypto';
@@ -50,35 +48,54 @@ export class FirebaseExerciseGenerator
         const result = await generateExercise(input);
 
         console.log(
-        'RAW RESPONSE',
-        JSON.stringify(result.data, null, 2),
+            'RAW RESPONSE',
+            JSON.stringify(result.data, null, 2),
         );
 
-        const generated = completeContentSchema.parse(
-            result.data,
-        );
 
-        console.log('COMPLETE EXERCISE', JSON.stringify(generated, null, 2));
-
-        console.log(
-            'VALIDATED EXERCISE',
-            generated,
-        );
-
-        return {
+        const baseExercise = {
             id: Crypto.randomUUID(),
-            type: request.type,
             level: request.level,
             difficulty: request.difficulty,
-            prompt: generated.instruction,
-            referenceAnswers: [],
-            completeContent: generated,
-            competencyIds:
-                request.context.competencies.map(
-                    competency => competency.id,
-                ),
+            competencyIds: request.context.competencies.map(
+                competency => competency.id,
+            ),
             vocabularyIds: [],
             topicId: request.context.topic.id,
+            referenceAnswers: [],
         };
+
+        switch (request.type) {
+            case 'complete': {
+                const generated = completeContentSchema.parse(
+                    result.data,
+                );
+
+                return {
+                    ...baseExercise,
+                    type: 'complete',
+                    prompt: generated.instruction,
+                    completeContent: generated,
+                };
+            }
+
+            case 'translate_en_it': {
+                const generated = translateEnItContentSchema.parse(
+                    result.data,
+                );
+
+                return {
+                    ...baseExercise,
+                    type: 'translate_en_it',
+                    prompt: generated.instruction,
+                    translateEnItContent: generated,
+                };
+            }
+
+            default:
+                throw new Error(
+                    `Unsupported exercise type: ${request.type}`,
+                );
+        }
     }
 }

@@ -1,6 +1,6 @@
 import {
     SplashScreen,
-} from './src/screens/spalsh/splash';
+} from './src/screens/splash/splash';
 import { useEffect, useState } from 'react';
 import { Learner } from './src/domain';
 import { HomeScreen } from './src/screens/home/home';

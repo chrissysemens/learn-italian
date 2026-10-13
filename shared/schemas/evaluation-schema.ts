@@ -28,7 +28,20 @@ const completeErrorLocationSchema = z.object({
     range: textRangeSchema.nullable(),
 });
 
-export const evaluationSchema = z.object({
+const detectedErrorSchema = z.object({
+    id: z.string(),
+    errorType: z.string(),
+    competencyId: z.string().nullable(),
+    category: learnerErrorCategorySchema,
+
+    range: textRangeSchema.nullable(),
+
+    learnerForm: z.string(),
+    correctedForm: z.string(),
+    explanation: z.string(),
+});
+
+const baseEvaluationSchema = z.object({
     score: z.number().min(-1).max(1),
 
     feedback: z.string(),
@@ -39,7 +52,29 @@ export const evaluationSchema = z.object({
             score: z.number().min(-1).max(1),
         }),
     ),
+});
 
+export const translateEnItEvaluationSchema =
+    baseEvaluationSchema.extend({
+        sectionEvaluations: z.array(
+            z.object({
+                sourceText: z.string(),
+                correct: z.boolean(),
+                learnerText: z.string(),
+                correctedText: z.string(),
+            }),
+        ),
+
+        correctedTranslation: z.string(),
+
+        detectedErrors: z.array(
+            detectedErrorSchema.extend({
+                location: z.null(),
+            }),
+        ),
+    });
+
+export const completeEvaluationSchema = baseEvaluationSchema.extend({
     blankEvaluations: z.array(
         z.object({
             blankId: z.string(),
@@ -49,23 +84,20 @@ export const evaluationSchema = z.object({
     ),
 
     detectedErrors: z.array(
-        z.object({
-            id: z.string(),
-            errorType: z.string(),
-            competencyId: z.string().nullable(),
-            category: learnerErrorCategorySchema,
-
-            range: textRangeSchema.nullable(),
+        detectedErrorSchema.extend({
             location: completeErrorLocationSchema.nullable(),
-
-            learnerForm: z.string(),
-            correctedForm: z.string(),
-            explanation: z.string(),
         }),
     ),
 });
 
-export type Evaluation = z.infer<typeof evaluationSchema>;
+export type CompleteEvaluation = z.infer<
+    typeof completeEvaluationSchema
+>;
+
+export type TranslateEnItEvaluation = z.infer<
+    typeof translateEnItEvaluationSchema
+>;
+
 export type LearnerErrorCategory = z.infer<
     typeof learnerErrorCategorySchema
 >;

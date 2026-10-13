@@ -1,19 +1,25 @@
-import { ExerciseDifficulty, CefrLevel, ExerciseType } from '../../types';
+
+import {
+    ExerciseDifficulty,
+    CefrLevel,
+    ExerciseType,
+} from '../../types';
+
 import type {
-  CompleteExerciseContent,
+    CompleteExerciseContent,
+    TranslateEnItExerciseContent,
 } from '@percoso/shared';
 
-
-
 export interface Exercise {
-  id: string;
-  type: ExerciseType;
-  level: CefrLevel;
-  difficulty: ExerciseDifficulty;
-  prompt: string;
-  referenceAnswers: string[];
-  competencyIds: string[];
-  vocabularyIds: string[];
-  topicId?: string;
-  completeContent?: CompleteExerciseContent;
+    id: string;
+    type: ExerciseType;
+    level: CefrLevel;
+    difficulty: ExerciseDifficulty;
+    prompt: string;
+    referenceAnswers: string[];
+    competencyIds: string[];
+    vocabularyIds: string[];
+    topicId?: string;
+    completeContent?: CompleteExerciseContent;
+    translateEnItContent?: TranslateEnItExerciseContent;
 }

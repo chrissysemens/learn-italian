@@ -61,7 +61,7 @@ export const SplashScreen = () => {
   }, [dot1Opacity, dot2Opacity, dot3Opacity, dot4Opacity, dot5Opacity]);
 
   return (
-    <Screen style={styles.container}>
+    <Screen centered>
       <Logo width={180} height={90} />
 
       <View style={styles.dots}>
@@ -110,10 +110,6 @@ export const SplashScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-
   dots: {
     flexDirection: 'row',
     gap: 9,

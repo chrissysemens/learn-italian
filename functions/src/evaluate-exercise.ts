@@ -11,7 +11,8 @@ import OpenAI from 'openai';
 import { zodTextFormat } from 'openai/helpers/zod';
 
 import {
-  evaluationSchema,
+  //completeEvaluationSchema,
+  translateEnItEvaluationSchema,
 } from '@percoso/shared';
 
 import {
@@ -47,7 +48,7 @@ export const evaluateExercise = onCall(
 
           text: {
             format: zodTextFormat(
-              evaluationSchema,
+              translateEnItEvaluationSchema,
               'exercise_evaluation',
             ),
           },

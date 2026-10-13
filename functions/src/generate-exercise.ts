@@ -1,10 +1,10 @@
 import {
-  HttpsError,
-  onCall,
+    HttpsError,
+    onCall,
 } from 'firebase-functions/v2/https';
 
 import {
-  defineSecret,
+    defineSecret,
 } from 'firebase-functions/params';
 
 import OpenAI from 'openai';
@@ -12,100 +12,128 @@ import OpenAI from 'openai';
 import { zodTextFormat } from 'openai/helpers/zod';
 //import { generatedExerciseSchema } from '@percoso/shared';
 import {
-  completeContentSchema,
+    completeContentSchema,
+    translateEnItContentSchema,
 } from '@percoso/shared';
 import { exerciseGenerationPrompt } from './prompts/exercise-generation';
 import { completeExercisePrompt } from './prompts/complete-exercise';
+import { translateEnItExercisePrompt } from './prompts/translate-en-it-exercise';
 import {
     singleWordBlankPrompt,
 } from './prompts/blank-strategies';
 
 
+
 const openAiApiKey =
-  defineSecret('OPENAI_API_KEY');
+    defineSecret('OPENAI_API_KEY');
 
-export const generateExercise = onCall(
-  {
-    secrets: [openAiApiKey],
-  },
-  async request => {
-    try {
-      console.log(
-        'GENERATE EXERCISE',
-        request.data,
-      );
 
-      const openai = new OpenAI({
-        apiKey: openAiApiKey.value(),
-      });
-
-      const response =
-        await openai.responses.parse({
-          model: 'gpt-6-luna',
-
-          instructions: [
-            exerciseGenerationPrompt,
+const generationConfigs = {
+    complete: {
+        schema: completeContentSchema,
+        schemaName: 'complete_exercise',
+        prompts: [
             completeExercisePrompt,
             singleWordBlankPrompt,
-          ].join('\n\n'),
+        ],
+    },
+    translate_en_it: {
+        schema: translateEnItContentSchema,
+        schemaName: 'translate_en_it_exercise',
+        prompts: [
+            translateEnItExercisePrompt,
+        ],
+    },
+} as const;
 
-          input: JSON.stringify(request.data),
+export const generateExercise = onCall(
+    {
+        secrets: [openAiApiKey],
+    },
+    async request => {
+        try {
+            console.log(
+                'GENERATE EXERCISE',
+                request.data,
+            );
 
-          /*text: {
-            format: zodTextFormat(
-              generatedExerciseSchema,
-              'generated_exercise',
-            ),
-          },*/
-        text: {
-          format: zodTextFormat(
-            completeContentSchema,
-            'complete_exercise',
-          ),
-        },
-        });
+            const openai = new OpenAI({
+                apiKey: openAiApiKey.value(),
+            });
 
-      const exercise = response.output_parsed;
+            const type: unknown = request.data?.type;
 
-      if (!exercise) {
-        throw new Error(
-          'OpenAI did not return a generated exercise.',
-        );
-      }
+            if (
+                type !== 'complete' &&
+                type !== 'translate_en_it'
+            ) {
+                throw new HttpsError(
+                    'invalid-argument',
+                    'Unsupported exercise type.',
+                );
+            }
 
-      console.log(
-        'GENERATED EXERCISE',
-        JSON.stringify(exercise, null, 2),
-      );
+            const config = generationConfigs[type];
 
-      return exercise;
-    } catch (error) {
-      console.error(
-        'OPENAI ERROR',
-        error,
-      );
+            const response = await openai.responses.parse({
+                model: 'gpt-6-luna',
 
-      if (error instanceof OpenAI.APIError) {
-        console.error(
-          'OPENAI STATUS',
-          error.status,
-        );
+                instructions: [
+                    exerciseGenerationPrompt,
+                    ...config.prompts,
+                ].join('\n\n'),
 
-        console.error(
-          'OPENAI CODE',
-          error.code,
-        );
+                input: JSON.stringify(request.data),
 
-        console.error(
-          'OPENAI MESSAGE',
-          error.message,
-        );
-      }
+                text: {
+                    format: zodTextFormat(
+                        config.schema,
+                        config.schemaName,
+                    ),
+                },
+            });
 
-      throw new HttpsError(
-        'internal',
-        'Exercise generation failed.',
-      );
-    }
-  },
+            const exercise = response.output_parsed;
+
+            if (!exercise) {
+                throw new Error(
+                    'OpenAI did not return a generated exercise.',
+                );
+            }
+
+            console.log(
+                'GENERATED EXERCISE',
+                JSON.stringify(exercise, null, 2),
+            );
+
+            return exercise;
+        } catch (error) {
+            console.error(
+                'OPENAI ERROR',
+                error,
+            );
+
+            if (error instanceof OpenAI.APIError) {
+                console.error(
+                    'OPENAI STATUS',
+                    error.status,
+                );
+
+                console.error(
+                    'OPENAI CODE',
+                    error.code,
+                );
+
+                console.error(
+                    'OPENAI MESSAGE',
+                    error.message,
+                );
+            }
+
+            throw new HttpsError(
+                'internal',
+                'Exercise generation failed.',
+            );
+        }
+    },
 );
